@@ -1,1 +1,25 @@
-index
+<!DOCTYPE html>
+<html>
+<head>
+	<title>KAKAOTALK VIEWER</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="src/styles/bootstrap.min.css"/>
+	<link rel="stylesheet" href="src/styles/common.css"/>
+	<script src="src/scripts/jquery-1.7.2.js"></script>
+	<script src="src/scripts/app.js"></script>
+</head>
+<body>
+	<div class="file-load">
+		<input type="text" id="file_text"/>
+		<button id="open_file" onclick="Event.open_file()" class="form-control">Open</button>
+	</div>
+	<div class="sidebar-wrapper">
+		<div class="well sidebar-list">
+			<ul class="nav nav-list" id="sidebar">
+				<li class="nav-header">History</li>
+				<li class="divider"></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
