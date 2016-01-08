@@ -26,9 +26,7 @@ var MessageWrapper = React.createClass({
 	getInitialState: function() {
 		return {
 			messages: [],
-			// time: null,
-			// user: null,
-			// message: null
+			loaded: false,
 		}
 	},
 
@@ -37,28 +35,28 @@ var MessageWrapper = React.createClass({
 		var a = new parser_type(props.message_file);
 		a.isMac();
 		var b = new mac_parser(props.message_file);
+		var newArray = [];
+
 		b.message_parse(function(t, u, m) {
-			var newArray = update(self.state.messages, 
-				{
-					$push: [{time:t, user:u, message:m}]
-				});
+			newArray.push({time:t, user:u, message:m});
+		}, function() {
 			self.setState({
+				loaded: true,
 				messages: newArray
 			});
-			// self.setState({
-			// 	messages: self.state.messages.concat(
-			// 		{
-			// 			time: t,
-			// 			user: u,
-			// 			message: m
-			// 		})
-			// });
+
+			return false;
 		});
 	},
 
 	render: function() {
+		var class_name = "load";
+		if(!this.state.loaded) {
+			class_name = "unload";
+		}
+
 		return (
-			<div>
+			<div className={class_name}>
 				{this.state.messages.map(function(m){
 					return (
 						<div className="message">
