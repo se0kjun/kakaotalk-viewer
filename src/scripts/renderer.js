@@ -8,13 +8,15 @@ var mac_parser = require('./src/scripts/message_parser/mac_parser');
 
 var HistoryWrapper = React.createClass({
 	render: function() {
+		var self = this;
+
 		return (
 			<ul className="nav nav-list" id="sidebar">
 				<li className="nav-header">History</li>
 				<li className="divider"></li>
 				{
 					this.props.histories.map(function(history){
-						return <a href="#" className="">{history}</a>
+						return <li><a href="#" className="history-list" onClick={self.props.history_view}>{history}</a></li>
 					})
 				}
 			</ul>
@@ -26,11 +28,14 @@ var MessageWrapper = React.createClass({
 	getInitialState: function() {
 		return {
 			messages: [],
-			loaded: false,
+			loading: false,
 		}
 	},
 
 	componentWillReceiveProps: function(props) {
+		this.setState({
+			loading: true,
+		});
 		var self = this;
 		var a = new parser_type(props.message_file);
 		a.isMac();
@@ -38,10 +43,15 @@ var MessageWrapper = React.createClass({
 		var newArray = [];
 
 		b.message_parse(function(t, u, m) {
-			newArray.push({time:t, user:u, message:m});
+			newArray.push(
+				{
+					time:t,
+					user:u, 
+					message:m
+				});
 		}, function() {
 			self.setState({
-				loaded: true,
+				loading: false,
 				messages: newArray
 			});
 
@@ -50,8 +60,8 @@ var MessageWrapper = React.createClass({
 	},
 
 	render: function() {
-		var class_name = "load";
-		if(!this.state.loaded) {
+		var class_name = "loader";
+		if(!this.state.loading) {
 			class_name = "unload";
 		}
 
@@ -94,11 +104,18 @@ var App = React.createClass({
 			});
 	},
 
+	openHistory: function(g) {
+		console.log(g.currentTarget);
+		// this.setState({
+		// 	file_name: 
+		// });
+	},
+
 	render: function() {
 		return (
 			<div classNameName="container">
 				<div className="well sidebar-list">
-					<HistoryWrapper histories={this.state.histories} />
+					<HistoryWrapper histories={this.state.histories} history_view={this.openHistory} />
 				</div>
 				<div className="file-load">
 					<input type="text" id="file_text" onSubmit={this.test} value={this.state.file_name}/>
