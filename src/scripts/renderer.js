@@ -11,12 +11,11 @@ var HistoryWrapper = React.createClass({
 		var self = this;
 
 		return (
-			<ul className="nav nav-list" id="sidebar">
-				<li className="nav-header">History</li>
-				<li className="divider"></li>
+			<ul className="list-group" id="sidebar">
+				<li className="list-group-item"><h4>History</h4></li>
 				{
 					this.props.histories.map(function(history){
-						return <li><a href="#" className="history-list" onClick={self.props.history_view}>{history}</a></li>
+						return <li className="list-group-item"><a href="#" className="history-list" onClick={self.props.history_view}>{history}</a></li>
 					})
 				}
 			</ul>
@@ -104,25 +103,30 @@ var App = React.createClass({
 			});
 	},
 
-	openHistory: function(g) {
-		console.log(g.currentTarget);
-		// this.setState({
-		// 	file_name: 
-		// });
+	openHistory: function(click_history) {
+		this.setState({
+			file_name: click_history.currentTarget.innerHTML
+		});
 	},
 
 	render: function() {
 		return (
-			<div classNameName="container">
-				<div className="well sidebar-list">
+			<div className="row">
+				<div className="col-md-3 sidebar">
 					<HistoryWrapper histories={this.state.histories} history_view={this.openHistory} />
 				</div>
-				<div className="file-load">
-					<input type="text" id="file_text" onSubmit={this.test} value={this.state.file_name}/>
-					<button id="open_file" onClick={this.openFile} className="form-control">Open</button>
-				</div>
-				<div id="message_container" className="message-wrapper">
-					<MessageWrapper message_file={this.state.file_name} />
+				<div className="col-md-9">
+					<div className="file-load row">
+						<div className="col-md-10">
+							<input type="text" className="form-control" id="file_text" onSubmit={this.test} value={this.state.file_name}/>
+						</div>
+						<div className="col-md-2">
+							<button id="open_file" onClick={this.openFile} className="btn btn-primary">Open</button>
+						</div>
+					</div>
+					<div id="message_container" className="message-wrapper">
+						<MessageWrapper message_file={this.state.file_name} />
+					</div>
 				</div>
 			</div>
 		);
