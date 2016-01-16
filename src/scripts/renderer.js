@@ -2,22 +2,39 @@
 var remote = require('remote');
 var dialog = remote.require('dialog');
 var update = require('react-addons-update');
-var React = require('react');
 var parser_type = require('./src/scripts/parser');
 var mac_parser = require('./src/scripts/message_parser/mac_parser');
 
+var React = require("react"),
+	ReactDOM = require("react-dom");
+
 var HistoryWrapper = React.createClass({
+	propTypes: {
+		histories: React.PropTypes.array.isRequired,
+		history_view: React.PropTypes.func.isRequired
+	},
+
+	getDefaultProps: function(){
+		return {
+			histories: []
+		}
+	},
+
 	render: function() {
-		var self = this;
+		var histories = this.props.histories.map(function(history){
+			return (
+				<li className="list-group-item">
+					<a  className="history-list" onClick={this.props.history_view}>
+						{history}
+					</a>
+				</li>
+			)
+		}.bind(this));
 
 		return (
 			<ul className="list-group" id="sidebar">
 				<li className="list-group-item"><h4>History</h4></li>
-				{
-					this.props.histories.map(function(history){
-						return <li className="list-group-item"><a href="#" className="history-list" onClick={self.props.history_view}>{history}</a></li>
-					})
-				}
+				{histories}
 			</ul>
 		);
 	}
@@ -27,13 +44,13 @@ var MessageWrapper = React.createClass({
 	getInitialState: function() {
 		return {
 			messages: [],
-			loading: false,
+			loading: false
 		}
 	},
 
 	componentWillReceiveProps: function(props) {
 		this.setState({
-			loading: true,
+			loading: true
 		});
 		var self = this;
 		var a = new parser_type(props.message_file);
@@ -45,7 +62,7 @@ var MessageWrapper = React.createClass({
 			newArray.push(
 				{
 					time:t,
-					user:u, 
+					user:u,
 					message:m
 				});
 		}, function() {
@@ -64,28 +81,30 @@ var MessageWrapper = React.createClass({
 			class_name = "unload";
 		}
 
+		var messages = this.state.messages.map(function(m){
+			return (
+				<div className="message">
+					<span>{m.time}</span>
+					<span>{m.user}</span>
+					<span>{m.message}</span>
+				</div>
+			)
+		});
+
 		return (
 			<div className={class_name}>
-				{this.state.messages.map(function(m){
-					return (
-						<div className="message">
-							<span>{m.time}</span>
-							<span>{m.user}</span>
-							<span>{m.message}</span>
-						</div>
-					);
-				})}
+				{messages}
 			</div>
 		);
 	}
 });
 
-var App = React.createClass({ 
+var App = React.createClass({
 	getInitialState: function() {
 		return {
 			data: null,
 			file_name: null,
-			histories: [],
+			histories: []
 		}
 	},
 
@@ -94,11 +113,11 @@ var App = React.createClass({
 		dialog.showOpenDialog(
 			{
 				properties: ['openFile']
-			}, 
+			},
 			function(filename) {
 				self.setState({
 					file_name: filename.toString(),
-					histories: self.state.histories.concat([filename.toString()]),
+					histories: self.state.histories.concat([filename.toString()])
 				});
 			});
 	},
@@ -133,7 +152,7 @@ var App = React.createClass({
 	}
 });
 
-React.render(
-	<App />,
-	document.getElementById('content-wrapper')
+ReactDOM.render(
+	<App/>,
+	document.getElementById("content-wrapper")
 );
