@@ -1,12 +1,10 @@
 
-var line_reader = require('readline');
-var remote = require('remote');
-var BrowserWindow = remote.require('browser-window');
+// var line_reader = require('readline');
 
 function ParserType(_filepath) {
-	this.lineReader = require('readline').createInterface({
-	  input: require('fs').createReadStream(_filepath)
-	});
+	// this.lineReader = require('readline').createInterface({
+	//   input: require('fs').createReadStream(_filepath)
+	// });
 
 	if(process.platform == "darwin") {
 		this.delim = '/';

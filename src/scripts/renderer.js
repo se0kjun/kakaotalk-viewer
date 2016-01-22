@@ -1,9 +1,8 @@
 
-var remote = require('remote');
+var remote = require('electron-prebuilt').remote;
 var dialog = remote.require('dialog');
-var update = require('react-addons-update');
-var parser_type = require('./src/scripts/parser');
-var mac_parser = require('./src/scripts/message_parser/mac_parser');
+var parser_type = require('./parser');
+var mac_parser = require('./message_parser/mac_parser');
 
 var React = require("react"),
 	ReactDOM = require("react-dom");
