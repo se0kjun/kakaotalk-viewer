@@ -1,8 +1,35 @@
 {
-	"name": "kakaotalk-viewer",
-	"version": "0.1.0",
-	"main": "src/main.js",
-	"dependencies": {
-
-	}
+  "name": "kakaotalk-viewer",
+  "version": "0.1.0",
+  "main": "src/main.js",
+  "dependencies": {
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
+  },
+  "description": "view backup message",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/se0kjun/kakaotalk-viewer.git"
+  },
+  "author": "Seokjun Hong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/se0kjun/kakaotalk-viewer/issues"
+  },
+  "homepage": "https://github.com/se0kjun/kakaotalk-viewer",
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "debug": "^2.2.0",
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.36.4",
+    "line-reader": "^0.3.0",
+    "webpack": "^1.12.11"
+  }
 }
