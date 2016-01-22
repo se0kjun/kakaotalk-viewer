@@ -9,6 +9,7 @@
   "description": "view backup message",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "webpack -w webpack.config.js",
     "start": "electron ./"
   },
   "repository": {
