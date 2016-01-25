@@ -57,7 +57,7 @@ var MessageWrapper = React.createClass({
 		var b = new mac_parser(props.message_file);
 		var newArray = [];
 
-		b.message_parse(function(t, u, m) {
+		b.message_parse(function(t, u, m, type) {
 			newArray.push(
 				{
 					time:t,
