@@ -1,5 +1,5 @@
 
-var remote = require('electron-prebuilt').remote;
+var remote = window.require('remote');
 var dialog = remote.require('dialog');
 var parser_type = require('./parser');
 var mac_parser = require('./message_parser/mac_parser');
