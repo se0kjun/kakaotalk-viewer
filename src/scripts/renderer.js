@@ -3,6 +3,7 @@ var remote = window.require('remote');
 var dialog = remote.require('dialog');
 var parser_type = require('./parser');
 var mac_parser = require('./message_parser/mac_parser');
+var mobile_parser = require('./message_parser/mobile_parser');
 
 var React = require("react"),
 	ReactDOM = require("react-dom");
@@ -56,8 +57,8 @@ var MessageWrapper = React.createClass({
 		a.isMac();
 		var b = new mac_parser(props.message_file);
 		var newArray = [];
-
-		b.message_parse(function(t, u, m, type) {
+		var c = new mobile_parser(props.message_file);
+		c.message_parse(function(t, u, m, type) {
 			newArray.push(
 				{
 					time:t,
@@ -72,6 +73,21 @@ var MessageWrapper = React.createClass({
 
 			return false;
 		});
+		// b.message_parse(function(t, u, m, type) {
+		// 	newArray.push(
+		// 		{
+		// 			time:t,
+		// 			user:u,
+		// 			message:m
+		// 		});
+		// }, function() {
+		// 	self.setState({
+		// 		loading: false,
+		// 		messages: newArray
+		// 	});
+
+		// 	return false;
+		// });
 	},
 
 	render: function() {
