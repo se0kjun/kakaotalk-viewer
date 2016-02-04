@@ -1,0 +1,23 @@
+{
+  "name": "kakaotalk-viewer",
+  "description": "view backup message",
+  "main": "src/main.js",
+  "authors": [
+    "Seokjun Hong"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/se0kjun/kakaotalk-viewer",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.0"
+  }
+}
