@@ -58,13 +58,14 @@ var MessageWrapper = React.createClass({
 		a.isMac();
 		var b = new mac_parser(props.message_file);
 		var newArray = [];
-		var c = new window_parser(props.message_file);
+		var c = new mobile_parser(props.message_file);
 		c.message_parse(function(t, u, m, type) {
 			newArray.push(
 				{
 					time:t,
 					user:u,
-					message:m
+					message:m,
+					message_type: type
 				});
 		}, function() {
 			self.setState({
@@ -98,11 +99,14 @@ var MessageWrapper = React.createClass({
 		}
 
 		var messages = this.state.messages.map(function(m){
+			var message_element = (m.message_type == "message") 
+				? <span>{m.message}</span> : <img src={m.message}/>;
+
 			return (
 				<div className="message">
 					<span>{m.time}</span>
 					<span>{m.user}</span>
-					<span>{m.message}</span>
+					{message_element}
 				</div>
 			)
 		});
