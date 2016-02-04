@@ -6,26 +6,33 @@ function MobileParser(_filepath) {
 }
 
 //callback(time, user, message, type);
+// 2015년 8월 23일 오후 10:39, 회원님 : 콜링컨벤션때문에 개삽질했네
 MobileParser.prototype = {
 	message_parse: function(callback, end_callback) {
 		var self = this;
-		var image_regex = new RegExp("[\\w]{1,}.(jpeg|png|gif)", "g");
+		var image_regex = new RegExp("[\\w+].(jpg|jpeg|png|gif)$", "g");
+		var message_regex = new RegExp("^([(\\d)|(가-힣)|\\s]+),", "g");
+
 		lineReader.eachLine(this.filepath, function(line, last){
-			if(line.indexOf(':') != -1) {
-				var result = line.split(':');
-				var date_name = result[0].split(',');
-				var image_check = result[1].match(image_regex);
-				if(image_check == null || image_check.length === 0)
-					callback(date_name[0], date_name[1], result[1], "message");
-				else {
+			var delim_index;
+			if((delim_index = line.indexOf(',')) !== -1) {
+				var user_date_time = line.substring(0, delim_index);
+				var message_content = line.substring(delim_index);
+
+				var user_name = message_content.substring(0, message_content.indexOf(':'));
+				var user_message = message_content.substring(message_content.indexOf(':') + 2);
+
+				if(!image_regex.test(user_message)) {
+					callback(user_date_time, user_name, user_message, "message");
+				} else {
 					var media_path;
 					if(process.platform == "darwin") {
-						media_path = this.filepath.substring(0, this.filepath.lastIndexOf('/')+1);
+						media_path = self.filepath.substring(0, self.filepath.lastIndexOf('/')+1);
 					}
 					else if(process.platform == "win") {
-						media_path = this.filepath.substring(0, this.filepath.lastIndexOf('\\')+1);
+						media_path = self.filepath.substring(0, self.filepath.lastIndexOf('\\')+1);
 					}
-					callback(date_name[0], date_name[1], media_path + image_check[0], "media");
+					callback(user_date_time, user_name, media_path + user_message.trim(), "media");
 				}
 			}
 			if(last) {
