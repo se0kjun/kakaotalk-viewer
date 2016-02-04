@@ -4,6 +4,7 @@ var dialog = remote.require('dialog');
 var parser_type = require('./parser');
 var mac_parser = require('./message_parser/mac_parser');
 var mobile_parser = require('./message_parser/mobile_parser');
+var window_parser = require('./message_parser/window_parser');
 
 var React = require("react"),
 	ReactDOM = require("react-dom");
@@ -57,7 +58,7 @@ var MessageWrapper = React.createClass({
 		a.isMac();
 		var b = new mac_parser(props.message_file);
 		var newArray = [];
-		var c = new mobile_parser(props.message_file);
+		var c = new window_parser(props.message_file);
 		c.message_parse(function(t, u, m, type) {
 			newArray.push(
 				{
