@@ -24,19 +24,19 @@ var HistoryWrapper = React.createClass({
 	render: function() {
 		var histories = this.props.histories.map(function(history){
 			return (
-				<li className="list-group-item">
-					<a  className="history-list" onClick={this.props.history_view}>
-						{history}
-					</a>
-				</li>
+				<a className="item" onClick={this.props.history_view}>
+					{history}
+				</a>
 			)
 		}.bind(this));
 
 		return (
-			<ul className="list-group" id="sidebar">
-				<li className="list-group-item"><h4>History</h4></li>
-				{histories}
-			</ul>
+			<div className="ui dropdown item">
+				History <i className="dropdown icon"></i>
+				<div className="menu">
+					{histories}
+				</div>
+			</div>
 		);
 	}
 });
@@ -93,20 +93,29 @@ var MessageWrapper = React.createClass({
 	},
 
 	render: function() {
-		var class_name = "loader";
+		var class_name = "ui divided items loader";
 		if(!this.state.loading) {
-			class_name = "unload";
+			class_name = "ui divided items unload";
 		}
 
 		var messages = this.state.messages.map(function(m){
-			var message_element = (m.message_type == "message") 
-				? <span>{m.message}</span> : <img src={m.message}/>;
+			var message_element = (m.message_type == "media") 
+				? <div className="ui small image"><img src={m.message}/></div> : null;
 
 			return (
-				<div className="message">
-					<span>{m.time}</span>
-					<span>{m.user}</span>
+				<div className="item">
 					{message_element}
+					<div className="content">
+						<div className="header">
+							{m.user}
+						</div>
+						<div className="meta">
+							<span className="time">{m.time}</span>
+						</div>
+						<div className="description">
+							<p>{m.message}</p>
+						</div>
+					</div>
 				</div>
 			)
 		});
@@ -114,6 +123,31 @@ var MessageWrapper = React.createClass({
 		return (
 			<div className={class_name}>
 				{messages}
+			</div>
+		);
+	}
+});
+
+var MenuNav = React.createClass({
+	propTypes: {
+		histories: React.PropTypes.array.isRequired,
+		history_view: React.PropTypes.func.isRequired,
+		open_file: React.PropTypes.func.isRequired
+	},
+
+	render: function() {
+		return (
+			<div className="ui menu">
+				<HistoryWrapper histories={this.props.histories} history_view={this.props.history_view}  />
+				<div className="right menu">
+					<div className="item">
+						<input placeholder="Search..." type="text" />
+						<i className="search icon"></i>
+					</div>
+					<div className="item">
+						<button id="open_file" onClick={this.props.open_file} className="ui button">Open</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
@@ -151,18 +185,8 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<div className="row">
-				<div className="col-md-3 sidebar">
-					<HistoryWrapper histories={this.state.histories} history_view={this.openHistory} />
-				</div>
+				<MenuNav histories={this.state.histories} history_view={this.openHistory} open_file={this.openFile} />
 				<div className="col-md-9">
-					<div className="file-load row">
-						<div className="col-md-10">
-							<input type="text" className="form-control" id="file_text" onSubmit={this.test} value={this.state.file_name}/>
-						</div>
-						<div className="col-md-2">
-							<button id="open_file" onClick={this.openFile} className="btn btn-primary">Open</button>
-						</div>
-					</div>
 					<div id="message_container" className="message-wrapper">
 						<MessageWrapper message_file={this.state.file_name} />
 					</div>
