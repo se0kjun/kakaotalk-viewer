@@ -5,9 +5,10 @@ body {
 }
 
 .content-wrapper {
-	padding:10px;
+	
 }
 .message-wrapper {
+  padding:10px;
 	position:relative;
 	background-color:#0DC5C1;
 	min-height: 100px;

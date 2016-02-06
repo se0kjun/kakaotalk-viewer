@@ -19,7 +19,7 @@ MobileParser.prototype = {
 				var user_date_time = line.substring(0, delim_index);
 				var message_content = line.substring(delim_index);
 
-				var user_name = message_content.substring(0, message_content.indexOf(':'));
+				var user_name = message_content.substring(1, message_content.indexOf(':'));
 				var user_message = message_content.substring(message_content.indexOf(':') + 2);
 
 				if(!image_regex.test(user_message)) {
