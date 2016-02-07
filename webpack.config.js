@@ -46,8 +46,18 @@ var config = {
 		]
 	},
 	resolve: {
+		alias: {
+			jquery: "../../bower_components/jquery/dist/jquery.min.js",
+			semantic: "./semantic.min.js"
+		},
 		modulesDirectories: ['./node_modules']
-	}
+	},
+	plugins: [
+	    new webpack.ProvidePlugin({
+	        $: "jquery",
+	        jQuery: "jquery"
+	    })
+	]
 }
 
 module.exports = config;
