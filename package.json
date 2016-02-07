@@ -9,7 +9,7 @@
   "description": "view backup message",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js & bower install",
     "start": "electron ./"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.4",
     "file-loader": "^0.8.5",
+    "jquery": "^2.2.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "line-reader": "^0.3.0",
