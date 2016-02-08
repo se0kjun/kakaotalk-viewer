@@ -19,7 +19,11 @@ WindowParser.prototype = {
 			var result = message_regex.exec(line);
 
 			if(result !== null) {
-				callback(line.substring(0, result.index), '[' + message_date + result[0] + ']',
+				var date = message_date.match(/\d+/g),
+					time = result[0].match(/\d+/g);
+
+				callback(new Date(date[0], date[1], date[2], (result[0].indexOf("오전") !== -1) ? time[0] : (parseInt(time[0]) + 12).toString(), time[1]), 
+					line.substring(1, result.index-1),
 					line.substring(message_regex.lastIndex), "message");
 			}
 			else {

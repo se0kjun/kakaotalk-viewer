@@ -12,7 +12,11 @@ MacParser.prototype = {
 		lineReader.eachLine(this.filepath, function(line, last){
 			var result = line.split(',');
 			if(result.length == 3) 
-				callback(result[0], result[1], result[2], "message");
+				callback(
+					new Date(result[0]), 
+					result[1].substring(1, result[1].length-1), 
+					result[2].substring(1, result[2].length-1), 
+					"message");
 			if(last) {
 				end_callback();
 				return false;

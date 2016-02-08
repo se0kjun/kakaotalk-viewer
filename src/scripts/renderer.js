@@ -105,7 +105,7 @@ var MessageWrapper = React.createClass({
 							{m.user}
 						</div>
 						<div className="meta">
-							<span className="time">{m.time}</span>
+							<span className="time">{m.time.getFullYear()}-{m.time.getMonth()}-{m.time.getDay()} {m.time.getHours()}:{m.time.getMinutes()}</span>
 						</div>
 						<div className="description">
 							<p>{m.message}</p>
