@@ -3,8 +3,8 @@ body {
 	height:100%;
 }
 
-.content-wrapper {
-	
+.ui.form {
+  padding:0 15px;
 }
 .message-wrapper {
   padding:10px;
