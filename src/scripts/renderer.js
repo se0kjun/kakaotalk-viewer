@@ -43,11 +43,6 @@ var HistoryWrapper = React.createClass({
 });
 
 var MessageWrapper = React.createClass({
-	propTypes: {
-		histories: React.PropTypes.array.isRequired,
-		history_view: React.PropTypes.func.isRequired
-	},
-
 	getInitialState: function() {
 		return {
 			messages: [],
@@ -195,9 +190,7 @@ var App = React.createClass({
 			},
 			function(filename) {
 				self.file_name = filename.toString();
-				self.setState({
-					histories: self.state.histories.concat([filename.toString()])
-				});
+				self.history_file.push(filename.toString());
 			});
 	},
 
@@ -207,6 +200,11 @@ var App = React.createClass({
 		});
 	},
 
+	componentWillMount: function() {
+		this.file_name = "";
+		this.history_file = [];
+	},
+
 	componentDidMount: function() {
 		var self = this;
 		$('.ui.dropdown').dropdown();
@@ -214,7 +212,8 @@ var App = React.createClass({
 			onChange: function() {
 				self.setState({
 					message_type: $(this).closest('.checkbox').find('input').attr('id'),
-					file_name: self.file_name
+					file_name: self.file_name,
+					histories: self.history_file
 				});
 			}
 		});
